@@ -11,31 +11,48 @@
 https://www.amgl.work/archives/122/
 ***********************************************************************/
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
+#include <MD5Builder.h>
+#include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include <PubSubClient.h>
 #include <Ticker.h>
-
-int         config_serial_baudrate = 9600;                               //串口波特率
-const char* config_wifi_ssid = "2.4G";                                   //wifi名称
-const char* config_wifi_password = "AMGLAaaaaaaa";                       //wifi密码
-const char* config_mqtt_server_host = "mqtt.amgl.work";                  //MQTT服务器地址
-const char* config_ntp_server_host = "ntp.tencent.com";                  //NTP服务器地址
-const char* config_clientAccont = "a11a1b4f1c39ff85d5ea85b94ee427b5";    //设备账户
-String      config_clientToken = "1904c832a401818a64f91760b18ada63";     //密钥
-String      config_clientId = "93edc6e672f64904b40ebd091e127194";        //设备ID
-String      config_topicString = "105e35cc94a4fce5449d1f135f64e5df";     //私有主题
-
-//加载模块
 Ticker ticker;
 WiFiClient wifiClient;
 PubSubClient mqttClient(wifiClient);
 
-//主程序
-void setup() {
-  application_initialize();//应用程序初始化
+int         debug = 1;                                                   //调试模式
+int         config_serial_baudrate = 9600;                               //串口波特率
+const char* config_wifi_ssid = "2.4G";                                   //wifi名称
+const char* config_wifi_password = "AMGLAaaaaaaa";                       //wifi密码
+const char* config_server_host_mqtt = "x7xn.ss1x.mqtt.amgl.work";        //MQTT服务器地址
+const char* config_server_host_ntp = "ntp.tencent.com";                  //NTP服务器地址
+String      config_client_accont = "a11a1b4f1c39ff85d5ea85b94ee427b5";   //设备账户
+String      config_client_token = "1904c832a401818a64f91760b18ada63";    //设备密钥
+String      config_client_id = "93edc6e672f64904b40ebd091e127194";       //设备ID
+String      config_client_topic = "105e35cc94a4fce5449d1f135f64e5df";    //设备主题
+String      sign = "";                                                   //设备动态密钥
+String      mqtt_client_recived_data = "";                               //设备接收到的消息
+
+
+
+
+
+/**********************************************************************
+MQTT接收消息在下面，可自由发挥
+***********************************************************************/
+//当MQTT收到消息
+void mqtt_client_recived(){
+  Serial.println(mqtt_client_recived_data);
 }
 
-void loop() {
+
+void setup()
+{
+  application_initialize(); /* 应用程序初始化 */
+}
+
+void loop()
+{
+  application_loop();/* 应用程序主循环 */
 }
